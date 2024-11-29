@@ -1,2 +1,2 @@
-# aoc24
- 🎅 advent of code 2023 in Rust
+# 🎅 advent of code 2023 in Rust
+Let's get this bread
