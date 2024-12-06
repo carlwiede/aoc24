@@ -21,17 +21,28 @@ pub fn part1(input: Vec<String>) -> String
 
 pub fn part2(input: Vec<String>) -> String
 {
+    let mut visited: HashMap<(usize, usize), usize> = HashMap::new();
+    let mut guard = find_guard(&input);
+
+    visit_current_position(&mut visited, &guard);
+
+    while let Some(new_guard) = walk(&input, &guard) {
+        guard = new_guard;
+        visit_current_position(&mut visited, &guard);
+    }
+
+    let positions: Vec<(usize, usize)> = visited.keys().cloned().collect();
+
     let base_input = input.clone();
-    let size = base_input.len();
 
     let mut successful_attempts = 0;
 
-    for i in 0..input.len() * input.first().unwrap().len() {
+    for position in positions {
 
         let mut input: Vec<String> = base_input.clone();
         let mut guard: ((usize, usize), usize) = find_guard(&input);
 
-        if !place_obstruction(&mut input, (i % size, i / size)) {
+        if !place_obstruction(&mut input, position) {
             continue;
         }
 
@@ -99,7 +110,7 @@ fn place_obstruction(map: &mut Vec<String>, pos: (usize, usize)) -> bool
 {
     if let Some(line) = map.get_mut(pos.1) {
         if let Some(c) = line.chars().nth(pos.0) {
-            if c == '#' || c == '^' {
+            if c == '^' {
                 return false;
             }
             let mut chars: Vec<char> = line.chars().collect();
