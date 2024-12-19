@@ -2,7 +2,8 @@ use std::collections::HashMap;
 
 pub fn part1(input: Vec<String>) -> String
 {
-    let (available, desired) = get_towels(&input);
+    let available: Vec<String> = input[0].split(", ").map(String::from).collect();
+    let desired: Vec<String> = input[2..].to_vec();
     let mut possible = 0;
 
     for d in desired {
@@ -14,7 +15,8 @@ pub fn part1(input: Vec<String>) -> String
 
 pub fn part2(input: Vec<String>) -> String
 {
-    let (available, desired) = get_towels(&input);
+    let available: Vec<String> = input[0].split(", ").map(String::from).collect();
+    let desired: Vec<String> = input[2..].to_vec();
     let mut possible = 0;
     let mut cache: HashMap<String, i64> = HashMap::new();
 
@@ -23,35 +25,6 @@ pub fn part2(input: Vec<String>) -> String
     }
 
     format!("{}", possible)
-}
-
-fn get_towels(input: &Vec<String>) -> (Vec<String>, Vec<String>)
-{
-    let mut is_desired = false;
-    let mut available: Vec<String> = Vec::new();
-    let mut desired: Vec<String> = Vec::new();
-
-    for line in input {
-        if line.is_empty() { is_desired = true; continue; }
-
-        if is_desired {
-            desired.push(line.clone());
-        } else {
-            let mut sb: String = String::new();
-            for c in line.chars() {
-                if c == ',' {
-                    available.push(sb.clone());
-                    sb.clear();
-                }
-                else if c != ' ' {
-                    sb.push(c);
-                }
-            }
-            available.push(sb);
-        }
-    }
-
-    (available, desired)
 }
 
 fn is_possible(available: &Vec<String>, desired: String) -> i64
