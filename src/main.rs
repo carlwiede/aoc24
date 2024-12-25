@@ -118,6 +118,10 @@ fn main() {
             println!("Day 24, Part 1: {}", days::day24::part1(input.clone()));
             println!("Day 24, Part 2: {}", days::day24::part2(input));
         }
+        25 => {
+            println!("Day 25, Part 1: {}", days::day25::part1(input.clone()));
+            println!("Day 25, Part 2: {}", days::day25::part2(input));
+        }
         _ => {
             eprintln!("Day {} is not implemented yet.", day);
         }
